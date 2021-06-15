@@ -108,6 +108,7 @@ public class ScanActivity extends AppCompatActivity implements IScanner, View.On
 
         final int action = getIntent().getExtras() != null ? getIntent().getExtras().getInt(WHICH_API) : -1;
         if (action == START_LIVE_DETECTION) {
+            Log.d(TAG, "onCreate: is Live detection");
             if (!BuildConfig.LIVE_DETECTION_ENABLED) {
                 setResult(ScanConstants.API_NOT_ENABLED);
                 finish();
@@ -115,6 +116,8 @@ public class ScanActivity extends AppCompatActivity implements IScanner, View.On
             setContentView(R.layout.activity_scan);
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             init();
+        }else{
+            Log.d(TAG, "onCreate: not action");
         }
     }
 
@@ -152,14 +155,17 @@ public class ScanActivity extends AppCompatActivity implements IScanner, View.On
     private void openCameraView() {
         Log.d(TAG, "openCameraView");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Log.d(TAG, "openCameraView delayed");
             TransitionManager.beginDelayedTransition(containerScan);
         }
         cropLayout.setVisibility(View.GONE);
         if (mImageSurfaceView.getAcquisitionMode() == ScanSurfaceView.AcquisitionMode.FROM_FILESYSTEM) {
+            Log.d(TAG, "getAcquisitionMode");
             mImageSurfaceView = new ScanSurfaceView(ScanActivity.this, ScanActivity.this);
             cameraPreviewLayout.addView(mImageSurfaceView);
         }
         else {
+            Log.d(TAG, "getAcquisitionMode false");
             mImageSurfaceView.setPreviewCallback();
         }
         goneManualMode();
@@ -184,8 +190,10 @@ public class ScanActivity extends AppCompatActivity implements IScanner, View.On
     private void goneManualMode() {
         Log.d(TAG, "Manual Mode");
         if (mImageSurfaceView != null) {
+            Log.d(TAG, "surface view null");
             mImageSurfaceView.setAcquisitionMode(ScanSurfaceView.AcquisitionMode.DETECTION_MODE);
         }
+        Log.d(TAG, "manual moda");
         captureBtn.setVisibility(View.GONE);
         limitedArea.setVisibility(View.GONE);
         switchModeBtn.setImageResource(R.drawable.ic_hand);
