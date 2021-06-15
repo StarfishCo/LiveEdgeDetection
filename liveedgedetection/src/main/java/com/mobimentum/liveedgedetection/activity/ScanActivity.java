@@ -97,12 +97,14 @@ public class ScanActivity extends AppCompatActivity implements IScanner, View.On
     private boolean flashIsEnable = false;
 
     static {
+        Log.d(TAG, "LoadLibrary");
         System.loadLibrary(mOpenCvLibrary);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate");
 
         final int action = getIntent().getExtras() != null ? getIntent().getExtras().getInt(WHICH_API) : -1;
         if (action == START_LIVE_DETECTION) {
@@ -117,6 +119,7 @@ public class ScanActivity extends AppCompatActivity implements IScanner, View.On
     }
 
     private void init() {
+        Log.d(TAG, "Scan init");
         containerScan = findViewById(R.id.container_scan);
         cameraPreviewLayout = findViewById(R.id.camera_preview);
         captureHintLayout = findViewById(R.id.capture_hint_layout);
@@ -147,6 +150,7 @@ public class ScanActivity extends AppCompatActivity implements IScanner, View.On
     }
 
     private void openCameraView() {
+        Log.d(TAG, "openCameraView");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             TransitionManager.beginDelayedTransition(containerScan);
         }
@@ -178,6 +182,7 @@ public class ScanActivity extends AppCompatActivity implements IScanner, View.On
     }
 
     private void goneManualMode() {
+        Log.d(TAG, "Manual Mode");
         if (mImageSurfaceView != null) {
             mImageSurfaceView.setAcquisitionMode(ScanSurfaceView.AcquisitionMode.DETECTION_MODE);
         }
@@ -268,6 +273,7 @@ public class ScanActivity extends AppCompatActivity implements IScanner, View.On
             isPermissionNotGranted = true;
             ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.CAMERA,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE }, MY_PERMISSIONS_REQUEST);
+            Log.d(TAG, "permissionsRequested");
         }
         else {
             if (!isPermissionNotGranted) {
@@ -277,6 +283,8 @@ public class ScanActivity extends AppCompatActivity implements IScanner, View.On
             }
             else {
                 isPermissionNotGranted = false;
+                Log.d(TAG, "permissionsGranted");
+
             }
         }
         goneManualMode();
@@ -286,10 +294,12 @@ public class ScanActivity extends AppCompatActivity implements IScanner, View.On
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == MY_PERMISSIONS_REQUEST) {
             onRequestCamera(grantResults);
+            Log.d(TAG, "onPermissionResult")
         }
     }
 
     private void onRequestCamera(int[] grantResults) {
+        Log.d(TAG, "onRequestCamera")
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED &&
                 grantResults[1] == PackageManager.PERMISSION_GRANTED) {
             new Handler().postDelayed(() -> runOnUiThread(() -> {
@@ -451,6 +461,7 @@ public class ScanActivity extends AppCompatActivity implements IScanner, View.On
 
     @Override
     public void onError(String message) {
+        Log.d(TAG, message)
         /* NOOP */
     }
 }
