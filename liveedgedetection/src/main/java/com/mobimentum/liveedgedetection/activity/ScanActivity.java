@@ -107,8 +107,6 @@ public class ScanActivity extends AppCompatActivity implements IScanner, View.On
         Log.d(TAG, "onCreate");
 
         final int action = getIntent().getExtras() != null ? getIntent().getExtras().getInt(WHICH_API) : -1;
-        if (action == START_LIVE_DETECTION) {
-            Log.d(TAG, "onCreate: is Live detection");
             if (!BuildConfig.LIVE_DETECTION_ENABLED) {
                 setResult(ScanConstants.API_NOT_ENABLED);
                 finish();
@@ -116,9 +114,6 @@ public class ScanActivity extends AppCompatActivity implements IScanner, View.On
             setContentView(R.layout.activity_scan);
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             init();
-        }else{
-            Log.d(TAG, "onCreate: not action");
-        }
     }
 
     private void init() {
