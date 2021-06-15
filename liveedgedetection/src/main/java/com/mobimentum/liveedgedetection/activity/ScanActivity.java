@@ -294,12 +294,12 @@ public class ScanActivity extends AppCompatActivity implements IScanner, View.On
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == MY_PERMISSIONS_REQUEST) {
             onRequestCamera(grantResults);
-            Log.d(TAG, "onPermissionResult")
+            Log.d(TAG, "onPermissionResult");
         }
     }
 
     private void onRequestCamera(int[] grantResults) {
-        Log.d(TAG, "onRequestCamera")
+        Log.d(TAG, "onRequestCamera");
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED &&
                 grantResults[1] == PackageManager.PERMISSION_GRANTED) {
             new Handler().postDelayed(() -> runOnUiThread(() -> {
@@ -461,7 +461,7 @@ public class ScanActivity extends AppCompatActivity implements IScanner, View.On
 
     @Override
     public void onError(String message) {
-        Log.d(TAG, message)
+        Log.d(TAG, message);
         /* NOOP */
     }
 }
