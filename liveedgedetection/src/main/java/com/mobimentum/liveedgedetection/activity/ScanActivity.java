@@ -236,21 +236,26 @@ public class ScanActivity extends AppCompatActivity implements IScanner, View.On
         if (requestCode == SELECTED_FILE_CODE && data != null) {
             mImageSurfaceView.surfaceDestroyed();
             try {
+                Log.d(TAG, "onActivityResult:try");
                 Uri selectedFile = data.getData();
                 ContentResolver cR = getApplicationContext().getContentResolver();
                 MimeTypeMap mime = MimeTypeMap.getSingleton();
                 String type = mime.getExtensionFromMimeType(cR.getType(selectedFile));
                 Log.i(TAG, "Caricato file da filesystem di tipo: " + type);
                 if (type.equals(PDF_EXT)) {
+                    Log.d(TAG, "onActivityResult:if");
                     ScanUtils.saveToInternalMemory(getApplicationContext(), selectedFile, this);
                 }
                 else {
+                    Log.d(TAG, "onActivityResult:else");
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedFile);
                     Bitmap rotatedBitmap = ScanUtils.modifyOrientation(getApplicationContext(), bitmap, selectedFile);
                     if (rotatedBitmap == null) {
+                        Log.d(TAG, "onActivityResult:rotatedBitmap:null");
                         onPictureClicked(bitmap);
                     }
                     else {
+                        Log.d(TAG, "onActivityResult:rotatedBitmap:notnull");
                         onPictureClicked(rotatedBitmap);
                     }
                     displayHint(NO_MESSAGE);
@@ -261,6 +266,7 @@ public class ScanActivity extends AppCompatActivity implements IScanner, View.On
             }
         }
         else {
+            Log.d(TAG, "onActivityResult:SELECTED_FILE_CODE");
             mImageSurfaceView.setAcquisitionMode(ScanSurfaceView.AcquisitionMode.DETECTION_MODE);
         }
     }
