@@ -134,7 +134,7 @@ public class ScanSurfaceView extends FrameLayout implements SurfaceHolder.Callba
                     defaultCameraId = i;
                 }
             }
-            camera = Camera.open(1);
+            camera = Camera.open(2);
             Camera.Parameters cameraParams = camera.getParameters();
 
             List<String> flashModes = cameraParams.getSupportedFlashModes();
